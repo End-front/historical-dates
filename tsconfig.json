@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "sourceMap": true,
-    
+
     "strict": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,

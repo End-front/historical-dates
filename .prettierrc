@@ -3,7 +3,7 @@
   "trailingComma": "all",
   "semi": true,
   "printWidth": 120,
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^../(.*)", "^./(.*)", "(.css)$"],
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^../(.*)", "^./(.*)", "(.scss)$"],
 
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,

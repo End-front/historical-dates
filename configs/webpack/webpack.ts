@@ -1,11 +1,11 @@
 import type { Configuration as WebpackConfiguration } from 'webpack';
 
+import { devServer } from './dev-server';
 import { isDev } from './lib/is-dev';
 import type { WebpackOptions } from './lib/types';
+import { loaders } from './loaders';
 import { plugins } from './plugins';
 import { resolvers } from './resolvers';
-import { loaders } from './loaders';
-import { devServer } from './dev-server';
 
 export function webpackConfig(options: WebpackOptions): WebpackConfiguration {
   return {

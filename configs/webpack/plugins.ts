@@ -1,10 +1,10 @@
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { HotModuleReplacementPlugin, ProgressPlugin, type WebpackPluginInstance } from 'webpack';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
-import type { WebpackOptions } from './lib/types';
 import { isDev } from './lib/is-dev';
+import type { WebpackOptions } from './lib/types';
 
 export function plugins({ mode, paths }: WebpackOptions): WebpackPluginInstance[] {
   const plugins: WebpackPluginInstance[] = [
@@ -16,9 +16,9 @@ export function plugins({ mode, paths }: WebpackOptions): WebpackPluginInstance[
       filename: 'css/[name].[contenthash:8].css',
       chunkFilename: 'css/[name].[contenthash:8].css',
     }),
-  ]
+  ];
 
-  if(isDev(mode)) {
+  if (isDev(mode)) {
     plugins.push(new ReactRefreshWebpackPlugin());
     plugins.push(new HotModuleReplacementPlugin());
   }
