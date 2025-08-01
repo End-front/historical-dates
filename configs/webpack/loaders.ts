@@ -9,7 +9,7 @@ export function loaders({ mode }: WebpackOptions): RuleSetRule[] {
   const cssLoader = {
     test: /\.s[ac]ss$/i,
     use: [
-      MiniCssExtractPlugin.loader,
+      isDev(mode) ? 'style-loader' : MiniCssExtractPlugin.loader,
       {
         loader: 'css-loader',
         options: {
