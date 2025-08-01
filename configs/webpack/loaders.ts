@@ -16,6 +16,7 @@ export function loaders({ mode }: WebpackOptions): RuleSetRule[] {
           modules: {
             auto: (resPath: string) => Boolean(resPath.includes('.module.')),
             localIdentName: isDev(mode) ? '[name]__[hash:base64:8]' : '[hash:base64:8]',
+            namedExport: false,
           },
         },
       },
