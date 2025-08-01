@@ -1,0 +1,96 @@
+:root {
+  --background: #ffffff;
+  --foreground: #42567a;
+  --primary: #3877ee;
+  --accent: #5d5fef;
+  --secondary: #ef5da8;
+
+  --font-size-sm: 14px;
+  --font-size: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 25px;
+  --font-size-2xl: 36px;
+  --font-size-3xl: 48px;
+  --font-size-4xl: 56px;
+
+  --leading-none: 1;
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+
+  --font-family: 'PT Sans', sans-serif;
+  --font-family-accent: 'Bebas Neue', sans-serif;
+}
+
+html,
+body,
+#root {
+  overflow: hidden;
+  min-height: auto;
+  max-height: none;
+  height: 100vh;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family);
+}
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ------------------------------ Reset CSS ------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+body {
+  min-height: 100vh;
+  line-height: var(--leading-normal);
+}
+h1,
+h2,
+h3,
+h4,
+button,
+input,
+label {
+  line-height: var(--leading-tight);
+}
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
