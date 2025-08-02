@@ -24,7 +24,7 @@ export function Layout({
     <section className={cn(styles.layout, 'container', className)} style={style}>
       {header}
       {timeline}
-      {folder}
+      <div className={styles.folderWrapper}>{folder}</div>
       {footer}
     </section>
   );

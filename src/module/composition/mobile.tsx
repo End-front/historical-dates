@@ -1,10 +1,21 @@
+import { type TabModel } from '../model/use-tab';
 import { Layout } from '../ui/layout';
 import { Slider } from '../ui/slider';
 import { Controls, Indicator, PaginationRow } from '../ui/timeline';
 
-export function MobileSection() {
+export function MobileSection({
+  className,
+  style,
+  tabModel,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+  tabModel: TabModel;
+}) {
   return (
     <Layout
+      className={className}
+      style={style}
       header={
         <Layout.TitleSection style={{ marginBottom: 56 }}>
           Исторические
@@ -13,58 +24,40 @@ export function MobileSection() {
         </Layout.TitleSection>
       }
       timeline={
-        <Layout.TitleRange style={{ marginBottom: 56 }}>
-          <Layout.LabelRange value={2015} style={{ color: 'var(--primary)' }} />
-          <Layout.LabelRange value={2022} style={{ color: 'var(--secondary)' }} />
+        <Layout.TitleRange style={{ marginBottom: 30 }}>
+          <Layout.LabelRange value={tabModel.currentContent.range.start} style={{ color: 'var(--primary)' }} />
+          <Layout.LabelRange value={tabModel.currentContent.range.end} style={{ color: 'var(--secondary)' }} />
         </Layout.TitleRange>
       }
       folder={
         <>
-          <Layout.TitleFolder>Наука</Layout.TitleFolder>
+          <Layout.TitleFolder>{tabModel.currentContent.folderTitle}</Layout.TitleFolder>
           <Layout.Divider />
-          <Slider style={{ marginBottom: 56 }}>
-            <Slider.Item
-              year={2015}
-              description="13 сентября — частное солнечное затмение, видимое в Южной Африке и части Антарктиды"
-            />
-            <Slider.Item
-              year={2016}
-              description="Телескоп «Хаббл» обнаружил самую удалённую из всех обнаруженных галактик, получившую обозначение GN-z11"
-            />
-            <Slider.Item
-              year={2017}
-              description="В 2017 году впервые была обнаружена планета за пределами Солнечной системы, получившая обозначение TRAPPIST-1"
-            />
-            <Slider.Item
-              year={2018}
-              description="В 2018 году впервые была обнаружена планета за пределами Солнечной системы, получившая обозначение TRAPPIST-1"
-            />
-            <Slider.Item
-              year={2019}
-              description="В 2019 году впервые была обнаружена планета за пределами Солнечной системы, получившая обозначение TRAPPIST-1"
-            />
-            <Slider.Item
-              year={2020}
-              description="В 2020 году впервые была обнаружена планета за пределами Солнечной системы, получившая обозначение TRAPPIST-1"
-            />
-            <Slider.Item
-              year={2021}
-              description="В 2021 году впервые была обнаружена планета за пределами Солнечной системы, получившая обозначение TRAPPIST-1"
-            />
+          <Slider key={tabModel.currentIndex} style={{ marginBottom: 30 }}>
+            {tabModel.currentContent.folder.map(({ title, description }, index) => (
+              <Slider.Item key={index} year={title} description={description} />
+            ))}
           </Slider>
         </>
       }
       footer={
         <>
-          <Indicator current={1} end={3} style={{ marginBottom: 10 }} />
+          <Indicator current={tabModel.currentIndex + 1} max={tabModel.maxIndex + 1} style={{ marginBottom: 10 }} />
           <Layout.FooterColumns
-            left={<Controls />}
+            left={
+              <Controls
+                disabledPrev={!tabModel.canPrev}
+                onPrev={tabModel.prevTab}
+                disabledNext={!tabModel.canNext}
+                onNext={tabModel.nextTab}
+              />
+            }
             center={
               <PaginationRow
-                length={3}
-                current={1}
+                current={tabModel.currentIndex}
+                length={tabModel.maxIndex + 1}
                 renderItem={({ index, isActive }) => (
-                  <PaginationRow.Item key={index} isActive={isActive} onSelect={() => console.log(index)} />
+                  <PaginationRow.Item key={index} isActive={isActive} onSelect={() => tabModel.toTab(index)} />
                 )}
                 style={{
                   marginTop: 4,
@@ -74,11 +67,6 @@ export function MobileSection() {
           />
         </>
       }
-      style={{
-        flexGrow: 1,
-        paddingTop: 20,
-        paddingBottom: 20,
-      }}
     />
   );
 }

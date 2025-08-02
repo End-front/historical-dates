@@ -27,9 +27,9 @@
 }
 
 .slide-item {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 
   width: 60% !important;
 

@@ -83,6 +83,13 @@
   }
 }
 
+.folder-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  justify-content: center;
+}
+
 .divider {
   margin-top: 20px;
   margin-bottom: 20px;

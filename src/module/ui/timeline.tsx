@@ -7,19 +7,19 @@ export function Indicator({
   className,
   style,
   current,
-  end,
+  max,
 }: {
   className?: string;
   style?: React.CSSProperties;
   current: number;
-  end: number;
+  max: number;
 }) {
   const formattedCurrent = current.toString().padStart(2, '0');
-  const formattedEnd = end.toString().padStart(2, '0');
+  const formattedMax = max.toString().padStart(2, '0');
 
   return (
     <div className={cn(styles.indicator, className)} style={style}>
-      <span>{formattedCurrent}</span>/<span>{formattedEnd}</span>
+      <span>{formattedCurrent}</span>/<span>{formattedMax}</span>
     </div>
   );
 }
