@@ -1,0 +1,96 @@
+@use '../../shared/ui/variables.scss';
+@use 'sass:math';
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title-section {
+  position: relative;
+  font-size: var(--font-size-lg);
+  line-height: var(--leading-tight);
+  font-weight: 700;
+
+  @media (min-width: variables.$media-sm) {
+    font-size: var(--font-size-xl);
+  }
+
+  @media (min-width: variables.$media-md) {
+    font-size: var(--font-size-2xl);
+  }
+
+  @media (min-width: variables.$media-lg) {
+    font-size: var(--font-size-3xl);
+
+    &:before {
+      content: '';
+      pointer-events: none;
+      display: block;
+      position: absolute;
+      top: 0.125em;
+      bottom: 0.125em;
+      left: calc(var(--container-padding) * -1);
+      width: 5px;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+  }
+
+  @media (min-width: variables.$media-xl) {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.title-range {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.label-range {
+  font-size: 17.5vw;
+  font-weight: 700;
+  line-height: var(--leading-none);
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+
+  @media (min-width: variables.$media-sm) {
+    font-size: math.round(variables.$media-sm * 0.175);
+  }
+
+  @media (min-width: variables.$media-md) {
+    font-size: math.round(variables.$media-md * 0.175);
+  }
+
+  @media (min-width: variables.$media-lg) {
+    font-size: math.round(variables.$media-lg * 0.165);
+  }
+
+  @media (min-width: variables.$media-xl) {
+    font-size: math.round(variables.$media-xl * 0.154);
+  }
+}
+
+.title-folder {
+  font-size: var(--font-size);
+  line-height: var(--leading-normal);
+  font-weight: 700;
+
+  @media (min-width: variables.$media-md) {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.divider {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: none;
+  border-top: 1px solid #c7cdd9;
+}
+
+.footer-columns {
+  display: flex;
+}

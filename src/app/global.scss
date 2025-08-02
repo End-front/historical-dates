@@ -1,3 +1,5 @@
+@use '../shared/ui/variables.scss';
+
 :root {
   --background: #ffffff;
   --foreground: #42567a;
@@ -35,6 +37,32 @@ body,
 #root {
   display: flex;
   flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  --container-padding: 20px;
+  padding-right: var(--container-padding);
+  padding-left: var(--container-padding);
+
+  @media (min-width: variables.$media-sm) {
+    max-width: variables.$media-sm;
+    --container-padding: 30px;
+  }
+  @media (min-width: variables.$media-md) {
+    max-width: variables.$media-md - 10px;
+    --container-padding: 40px;
+  }
+  @media (min-width: variables.$media-lg) {
+    max-width: variables.$media-lg - 20px;
+    --container-padding: 60px;
+  }
+  @media (min-width: variables.$media-xl) {
+    max-width: variables.$media-xl - 20px;
+    --container-padding: 80px;
+  }
 }
 
 /* ------------------------------ Reset CSS ------------------------------ */

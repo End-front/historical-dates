@@ -1,0 +1,113 @@
+@use '../../shared/ui/variables.scss';
+
+.slider {
+  position: relative;
+}
+
+.swiper {
+  width: 100%;
+  user-select: none;
+
+  --gap-between-slides: 24px;
+  @media (min-width: variables.$media-sm) {
+    --gap-between-slides: 24px;
+  }
+
+  @media (min-width: variables.$media-md) {
+    --gap-between-slides: 40px;
+  }
+
+  @media (min-width: variables.$media-lg) {
+    --gap-between-slides: 60px;
+  }
+
+  @media (min-width: variables.$media-xl) {
+    --gap-between-slides: 80px;
+  }
+}
+
+.slide-item {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  width: 60% !important;
+
+  @media (min-width: variables.$media-sm) {
+    width: calc(50% - var(--gap-between-slides)) !important;
+  }
+
+  @media (min-width: variables.$media-md) {
+    width: calc(40% - var(--gap-between-slides)) !important;
+  }
+
+  @media (min-width: variables.$media-lg) {
+    width: calc(33.3333% - var(--gap-between-slides)) !important;
+  }
+}
+
+.slide-item-title {
+  font-family: var(--font-family-accent);
+  font-size: var(--font-size);
+  line-height: var(--leading-tight);
+  color: var(--primary);
+
+  @media (min-width: variables.$media-md) {
+    font-size: var(--font-size-lg);
+  }
+
+  @media (min-width: variables.$media-lg) {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.slide-item-description {
+  font-size: var(--font-size-sm);
+  line-height: var(--leading-normal);
+}
+
+.navigation-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  background: var(--background);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--primary);
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+
+  box-shadow: 0px 0px 15px rgba(56, 119, 238, 0.1);
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.navigation-button-init,
+.navigation-button-disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navigation-prev {
+  left: -10px;
+  transform: translateY(-50%) translateX(-100%);
+  svg {
+    transform: rotate(90deg);
+  }
+}
+
+.navigation-next {
+  right: -10px;
+  transform: translateY(-50%) translateX(100%);
+
+  svg {
+    transform: rotate(-90deg);
+  }
+}

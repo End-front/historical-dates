@@ -1,5 +1,7 @@
+import { TimelineRangeSection } from '../module';
+
 import './global.scss';
 
 export function App() {
-  return <div>Hello World</div>;
+  return <TimelineRangeSection />;
 }
