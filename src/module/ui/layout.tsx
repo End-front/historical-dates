@@ -2,6 +2,7 @@ import { useRef } from 'react';
 
 import { cn } from '../../shared/lib/cn';
 import { useEqualColumns } from '../lib/use-equal-columns';
+import { useAnimateNumberValue } from '../view-model/use-animate-number-value';
 
 import styles from './layout.module.scss';
 
@@ -96,9 +97,11 @@ Layout.LabelRange = function LabelRange({
   style?: React.CSSProperties;
   value: number;
 }) {
+  const formattedValue = useAnimateNumberValue(value);
+
   return (
     <span className={cn(styles.labelRange, className)} style={style}>
-      {value}
+      {formattedValue}
     </span>
   );
 };
