@@ -50,7 +50,14 @@ export function DesktopSection({
               current={tabModel.currentIndex}
               length={tabModel.maxIndex + 1}
               renderItem={({ index, isActive, x, y }) => (
-                <PaginationCircle.Item key={index} order={index + 1} x={x} y={y} isActive={isActive}>
+                <PaginationCircle.Item
+                  key={index}
+                  order={index + 1}
+                  x={x}
+                  y={y}
+                  isActive={isActive}
+                  onSelect={() => tabModel.toTab(index)}
+                >
                   <Layout.TitleFolder
                     style={{
                       position: 'absolute',
