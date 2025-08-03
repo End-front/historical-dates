@@ -49,12 +49,11 @@ export function DesktopSection({
             <PaginationCircle
               current={tabModel.currentIndex}
               length={tabModel.maxIndex + 1}
-              renderItem={({ index, isActive, x, y }) => (
+              renderItem={({ index, isActive, radian }) => (
                 <PaginationCircle.Item
                   key={index}
                   order={index + 1}
-                  x={x}
-                  y={y}
+                  radian={radian}
                   isActive={isActive}
                   onSelect={() => tabModel.toTab(index)}
                 >

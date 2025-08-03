@@ -1,4 +1,7 @@
+import { useRef } from 'react';
+
 import { cn } from '../../shared/lib/cn';
+import { useAnimatePositionByRadian } from '../view-model/use-animate-position-by-radian';
 
 import { ArrowDownIcon } from './icons';
 import styles from './timeline.module.scss';
@@ -114,42 +117,28 @@ export function PaginationCircle({
   style?: React.CSSProperties;
   length: number;
   current: number;
-  renderItem: ({
-    index,
-    isActive,
-    x,
-    y,
-  }: {
-    index: number;
-    isActive: boolean;
-    x: number;
-    y: number;
-  }) => React.ReactNode;
+  renderItem: (args: { index: number; isActive: boolean; radian: number }) => React.ReactNode;
 }) {
-  const getPosition = (index: number) => {
-    const startAngleOffset = (60 * Math.PI) / 180;
-    const angle = (2 * Math.PI * index) / length - startAngleOffset;
-    const x = Math.cos(angle);
-    const y = Math.sin(angle);
+  const getRadian = (index: number) => {
+    const startRadianOffset = (60 * Math.PI) / 180;
+    const radian = (2 * Math.PI * (index - current)) / length - startRadianOffset;
 
-    return { x, y };
+    return radian;
   };
 
   return (
     <div className={cn(styles.paginationCircle, className)} style={style}>
       <div className={styles.paginationCircleInner} />
-      {Array.from({ length }).map((_, index) => {
-        const { x, y } = getPosition(index);
-        return renderItem({ index, isActive: index === current, x, y });
-      })}
+      {Array.from({ length }).map((_, index) =>
+        renderItem({ index, isActive: index === current, radian: getRadian(index) }),
+      )}
     </div>
   );
 }
 
 PaginationCircle.Item = function PaginationCircleItem({
   order,
-  x,
-  y,
+  radian,
   className,
   style,
   isActive,
@@ -157,23 +146,22 @@ PaginationCircle.Item = function PaginationCircleItem({
   children,
 }: {
   order: number;
-  x: number;
-  y: number;
+  radian: number;
   className?: string;
   style?: React.CSSProperties;
   isActive?: boolean;
   onSelect?: () => void;
   children?: React.ReactNode;
 }) {
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  useAnimatePositionByRadian(elementRef, radian);
+
   return (
     <div
+      ref={elementRef}
       className={cn(styles.paginationCircleItem, isActive && styles.paginationCircleItemActive, className)}
-      style={
-        {
-          ...style,
-          '--transform': `translate(calc(var(--radius) * ${x}), calc(var(--radius) * ${y}))`,
-        } as React.CSSProperties
-      }
+      style={style}
     >
       <button className={styles.paginationCircleItemContent} onClick={onSelect}>
         {order}
