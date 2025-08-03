@@ -16,8 +16,8 @@ export function useAnimatePositionByRadian(elementRef: React.RefObject<HTMLEleme
   useGSAP(() => {
     gsap.to(animatingRadian, {
       current: radian,
-      duration: 1,
-      ease: 'power2.out',
+      duration: 0.8,
+      ease: 'power1.out',
       onUpdate: function () {
         const { x, y } = getPosition(animatingRadian.current);
 
