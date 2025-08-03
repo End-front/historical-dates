@@ -19,6 +19,7 @@ export function useTab(content: TimelineContent[]) {
   return {
     currentIndex,
     maxIndex,
+    getFolderTitle: (index: number) => content[index]!.folderTitle,
     currentContent: content[currentIndex]!,
     canNext: currentIndex < maxIndex,
     canPrev: currentIndex > 0,

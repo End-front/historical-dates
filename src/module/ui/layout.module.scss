@@ -5,6 +5,24 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  z-index: 0;
+}
+
+.decor-line {
+  position: absolute;
+  pointer-events: none;
+  background-color: var(--foreground);
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.decor-line-vertical {
+  width: 1px;
+}
+
+.decor-line-horizontal {
+  height: 1px;
 }
 
 .title-section {
@@ -88,6 +106,18 @@
   flex-direction: column;
   min-height: 300px;
   justify-content: center;
+
+  @media (min-width: 400px) {
+    min-height: 250px;
+  }
+
+  @media (min-width: variables.$media-md) {
+    min-height: 280px;
+  }
+
+  @media (min-width: variables.$media-lg) {
+    min-height: 200px;
+  }
 }
 
 .divider {

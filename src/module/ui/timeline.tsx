@@ -66,17 +66,19 @@ export function PaginationRow({
   style,
   length,
   current,
-  renderItem,
+  onSelect,
 }: {
   className?: string;
   style?: React.CSSProperties;
   length: number;
   current: number;
-  renderItem: ({ index, isActive }: { index: number; isActive: boolean }) => React.ReactNode;
+  onSelect: (index: number) => void;
 }) {
   return (
     <div className={cn(styles.paginationRow, className)} style={style}>
-      {Array.from({ length }).map((_, index) => renderItem({ index, isActive: index === current }))}
+      {Array.from({ length }).map((_, index) => (
+        <PaginationRow.Item key={index} isActive={index === current} onSelect={() => onSelect(index)} />
+      ))}
     </div>
   );
 }
@@ -98,5 +100,85 @@ PaginationRow.Item = function PaginationRowItem({
       style={style}
       onClick={onSelect}
     />
+  );
+};
+
+export function PaginationCircle({
+  className,
+  style,
+  length,
+  current,
+  renderItem,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+  length: number;
+  current: number;
+  renderItem: ({
+    index,
+    isActive,
+    x,
+    y,
+  }: {
+    index: number;
+    isActive: boolean;
+    x: number;
+    y: number;
+  }) => React.ReactNode;
+}) {
+  const getPosition = (index: number) => {
+    const startAngleOffset = (60 * Math.PI) / 180;
+    const angle = (2 * Math.PI * index) / length - startAngleOffset;
+    const x = Math.cos(angle);
+    const y = Math.sin(angle);
+
+    return { x, y };
+  };
+
+  return (
+    <div className={cn(styles.paginationCircle, className)} style={style}>
+      <div className={styles.paginationCircleInner} />
+      {Array.from({ length }).map((_, index) => {
+        const { x, y } = getPosition(index);
+        return renderItem({ index, isActive: index === current, x, y });
+      })}
+    </div>
+  );
+}
+
+PaginationCircle.Item = function PaginationCircleItem({
+  order,
+  x,
+  y,
+  className,
+  style,
+  isActive,
+  onSelect,
+  children,
+}: {
+  order: number;
+  x: number;
+  y: number;
+  className?: string;
+  style?: React.CSSProperties;
+  isActive?: boolean;
+  onSelect?: () => void;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div
+      className={cn(styles.paginationCircleItem, isActive && styles.paginationCircleItemActive, className)}
+      style={
+        {
+          ...style,
+          '--transform': `translate(calc(var(--radius) * ${x}), calc(var(--radius) * ${y}))`,
+        } as React.CSSProperties
+      }
+    >
+      <button className={styles.paginationCircleItemContent} onClick={onSelect}>
+        {order}
+      </button>
+      {children}
+    </div>
   );
 };

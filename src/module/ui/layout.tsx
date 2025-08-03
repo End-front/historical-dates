@@ -8,6 +8,7 @@ import styles from './layout.module.scss';
 export function Layout({
   className,
   style,
+  startContainer,
   header,
   timeline,
   folder,
@@ -15,6 +16,7 @@ export function Layout({
 }: {
   className?: string;
   style?: React.CSSProperties;
+  startContainer?: React.ReactNode;
   header?: React.ReactNode;
   timeline?: React.ReactNode;
   folder?: React.ReactNode;
@@ -22,6 +24,7 @@ export function Layout({
 }) {
   return (
     <section className={cn(styles.layout, 'container', className)} style={style}>
+      {startContainer}
       {header}
       {timeline}
       <div className={styles.folderWrapper}>{folder}</div>
@@ -29,6 +32,28 @@ export function Layout({
     </section>
   );
 }
+
+Layout.DecorLine = function DecorLine({
+  className,
+  style,
+  type,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+  type: 'vertical' | 'horizontal';
+}) {
+  return (
+    <div
+      className={cn(
+        styles.decorLine,
+        className,
+        type === 'vertical' && styles.decorLineVertical,
+        type === 'horizontal' && styles.decorLineHorizontal,
+      )}
+      style={style}
+    />
+  );
+};
 
 Layout.TitleSection = function TitleSection({
   className,

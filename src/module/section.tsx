@@ -1,8 +1,26 @@
+import { useMediaQuery } from '../shared/lib/react/use-media-query';
+import { MEDIA_VALUES } from '../shared/model/media-query';
+
+import { DesktopSection } from './composition/desktop';
 import { MobileSection } from './composition/mobile';
 import { type TimelineContent, useTab } from './model/use-tab';
 
 export function TimelineRangeSection() {
+  const isDesktop = useMediaQuery(`(min-width: ${MEDIA_VALUES.lg}px)`);
   const tabModel = useTab(STATIC_CONTENT);
+
+  if (isDesktop) {
+    return (
+      <DesktopSection
+        tabModel={tabModel}
+        style={{
+          flexGrow: 1,
+          paddingTop: 20,
+          paddingBottom: 20,
+        }}
+      />
+    );
+  }
 
   return (
     <MobileSection

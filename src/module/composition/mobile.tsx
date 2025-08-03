@@ -56,9 +56,7 @@ export function MobileSection({
               <PaginationRow
                 current={tabModel.currentIndex}
                 length={tabModel.maxIndex + 1}
-                renderItem={({ index, isActive }) => (
-                  <PaginationRow.Item key={index} isActive={isActive} onSelect={() => tabModel.toTab(index)} />
-                )}
+                onSelect={tabModel.toTab}
                 style={{
                   marginTop: 4,
                 }}
