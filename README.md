@@ -136,8 +136,8 @@ npm install @radix-ui/react-accessibility
 1. Клонируйте репозиторий:
 
 ```bash
-git clone git@github.com:End-front/historical-dates.git
-cd historical-dates
+git clone git@github.com:End-front/timeline-slider.git
+cd timeline-slider
 ```
 
 2. Установите зависимости:
