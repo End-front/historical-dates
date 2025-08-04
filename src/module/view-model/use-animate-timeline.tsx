@@ -13,29 +13,19 @@ const AnimateTimelineContext = createStrictContext<TimelineContext>();
 export function useTimelineModel() {
   const [timeline, setTimeline] = useState<gsap.core.Timeline>();
 
-  const { contextSafe } = useGSAP();
-  const createTimeline = contextSafe(() => {
-    const tl = gsap.timeline();
+  useGSAP(
+    () => {
+      const tl = gsap.timeline();
 
-    tl.addLabel('start', 0);
-    tl.addLabel('middle', 0.6);
+      tl.addLabel('start', 0);
+      tl.addLabel('middle', 0.6);
 
-    return tl;
-  });
-  useGSAP(() => {
-    setTimeline(createTimeline);
-  });
+      setTimeline(tl);
+    },
+    { dependencies: [], revertOnUpdate: true },
+  );
 
-  const reset = () => {
-    timeline?.kill();
-
-    setTimeline(createTimeline);
-  };
-
-  return {
-    timeline,
-    reset,
-  };
+  return timeline;
 }
 
 export function AnimateTimelineProvider({

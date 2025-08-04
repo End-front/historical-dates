@@ -12,19 +12,22 @@ export function useAnimatePositionByRadian({
   const [position, setPosition] = useState(() => getPosition(radian));
 
   const animatingRadian = useRef(radian);
-  useGSAP(() => {
-    addAnimation(
-      gsap.to(animatingRadian, {
-        current: radian,
-        immediateRender: true,
-        duration: 0.8,
-        ease: 'power1.out',
-        onUpdate: function () {
-          setPosition(getPosition(animatingRadian.current));
-        },
-      }),
-    );
-  }, [addAnimation, radian]);
+  useGSAP(
+    () => {
+      addAnimation(
+        gsap.to(animatingRadian, {
+          current: radian,
+          immediateRender: true,
+          duration: 0.8,
+          ease: 'power1.out',
+          onUpdate: function () {
+            setPosition(getPosition(animatingRadian.current));
+          },
+        }),
+      );
+    },
+    { dependencies: [addAnimation, radian], revertOnUpdate: true },
+  );
 
   return position;
 }

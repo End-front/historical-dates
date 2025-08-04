@@ -14,31 +14,25 @@ export function useFadeBlock({
   const [opacity, setOpacity] = useState(visible ? 1 : 0);
   const opacityRef = useRef(opacity);
 
-  useGSAP(() => {
-    if (!visible) {
-      addExitAnimation(
-        gsap.to(opacityRef, {
-          current: 0,
-          duration: 0.2,
-          ease: 'power1.out',
-          onUpdate: function () {
-            setOpacity(opacityRef.current);
-          },
-        }),
-      );
-    } else {
-      addEnterAnimation(
-        gsap.to(opacityRef, {
-          current: 1,
-          duration: 0.2,
-          ease: 'power1.out',
-          onUpdate: function () {
-            setOpacity(opacityRef.current);
-          },
-        }),
-      );
-    }
-  }, [addEnterAnimation, addExitAnimation, visible]);
+  useGSAP(
+    () => {
+      const animation = gsap.to(opacityRef, {
+        current: visible ? 1 : 0,
+        duration: 0.2,
+        ease: 'power1.out',
+        onUpdate: function () {
+          setOpacity(opacityRef.current);
+        },
+      });
+
+      if (visible) {
+        addEnterAnimation(animation);
+      } else {
+        addExitAnimation(animation);
+      }
+    },
+    { dependencies: [addExitAnimation, addEnterAnimation, visible], revertOnUpdate: true },
+  );
 
   return opacity;
 }

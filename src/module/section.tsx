@@ -11,12 +11,16 @@ export function TimelineRangeSection() {
 
   const timelineModel = useTimelineModel();
   const tabModel = useTab(STATIC_CONTENT, {
-    onChange: () => timelineModel.reset(),
+    onChange: () => {
+      timelineModel?.invalidate();
+
+      timelineModel?.restart(true);
+    },
   });
 
   if (isDesktop) {
     return (
-      <AnimateTimelineProvider timeline={timelineModel.timeline}>
+      <AnimateTimelineProvider timeline={timelineModel}>
         <DesktopSection
           tabModel={tabModel}
           style={{
@@ -30,7 +34,7 @@ export function TimelineRangeSection() {
   }
 
   return (
-    <AnimateTimelineProvider timeline={timelineModel.timeline}>
+    <AnimateTimelineProvider timeline={timelineModel}>
       <MobileSection
         tabModel={tabModel}
         style={{
