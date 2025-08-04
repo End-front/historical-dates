@@ -1,7 +1,7 @@
 import { cn } from '../../shared/lib/cn';
 import { useAnimatePositionByRadian } from '../view-model/use-animate-position-by-radian';
 import { useAnimateTimeline } from '../view-model/use-animate-timeline';
-import { useFadeText } from '../view-model/use-fade-text';
+import { useFadeBlock } from '../view-model/use-fade-block';
 
 import { ArrowDownIcon } from './icons';
 import styles from './timeline.module.scss';
@@ -156,7 +156,7 @@ PaginationCircle.Item = function PaginationCircleItem({
   const { addToStart, addToMiddle } = useAnimateTimeline();
 
   const position = useAnimatePositionByRadian({ radian, addAnimation: addToStart });
-  const opacity = useFadeText({
+  const opacity = useFadeBlock({
     visible: !!isActive,
     addExitAnimation: addToStart,
     addEnterAnimation: addToMiddle,

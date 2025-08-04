@@ -2,7 +2,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useRef, useState } from 'react';
 
-export function useFadeText({
+export function useFadeBlock({
   visible,
   addExitAnimation,
   addEnterAnimation,
