@@ -18,8 +18,9 @@
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   },
+  "include": ["src/**/*", "configs/**/*"],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
