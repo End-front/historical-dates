@@ -4,6 +4,7 @@ import { cn } from '../../shared/lib/cn';
 import { useEqualColumns } from '../lib/use-equal-columns';
 import { useAnimateNumberValue } from '../view-model/use-animate-number-value';
 import { useAnimateTimeline } from '../view-model/use-animate-timeline';
+import { useToggleFade } from '../view-model/use-toggle-fade';
 
 import styles from './layout.module.scss';
 
@@ -29,11 +30,39 @@ export function Layout({
       {startContainer}
       {header}
       {timeline}
-      <div className={styles.folderWrapper}>{folder}</div>
+      {folder}
       {footer}
     </section>
   );
 }
+
+Layout.FolderWrapper = function FolderWrapper({
+  animateType,
+  className,
+  style,
+  children,
+}: {
+  animateType?: 'exit' | 'enter';
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}) {
+  const { addToStart, addToMiddle } = useAnimateTimeline();
+
+  const opacity = useToggleFade({
+    addExitAnimation: addToStart,
+    addEnterAnimation: addToMiddle,
+  });
+
+  return (
+    <div
+      className={cn(styles.folderWrapper, className)}
+      style={{ ...style, opacity, pointerEvents: animateType === 'enter' ? 'auto' : 'none' }}
+    >
+      {children}
+    </div>
+  );
+};
 
 Layout.DecorLine = function DecorLine({
   className,

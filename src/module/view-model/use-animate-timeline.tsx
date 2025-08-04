@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import { createStrictContext, useStrictContext } from '../../shared/lib/react';
 
@@ -10,8 +10,13 @@ type TimelineContext = {
 };
 const AnimateTimelineContext = createStrictContext<TimelineContext>();
 
-export function useTimelineModel() {
+export function useTimelineModel({ onMiddle }: { onMiddle?: () => void } = {}) {
   const [timeline, setTimeline] = useState<gsap.core.Timeline>();
+
+  const onMiddleRef = useRef(onMiddle);
+  useLayoutEffect(() => {
+    onMiddleRef.current = onMiddle;
+  }, [onMiddle]);
 
   useGSAP(
     () => {
@@ -20,9 +25,11 @@ export function useTimelineModel() {
       tl.addLabel('start', 0);
       tl.addLabel('middle', 0.6);
 
+      tl.call(() => onMiddleRef.current?.(), [], 'middle');
+
       setTimeline(tl);
     },
-    { dependencies: [], revertOnUpdate: true },
+    { revertOnUpdate: true },
   );
 
   return timeline;

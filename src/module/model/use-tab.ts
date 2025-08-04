@@ -20,28 +20,41 @@ export function useTab(
     onChange?: () => void;
   } = {},
 ) {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [state, setState] = useState<{
+    index: number;
+    deferredIndex: number | null;
+  }>({
+    index: 0,
+    deferredIndex: null,
+  });
   const maxIndex = content.length - 1;
 
+  const updateContent = async (newValue: number) => {
+    setState((prev) => ({
+      index: Math.max(0, Math.min(newValue, maxIndex)),
+      deferredIndex: prev.deferredIndex ?? prev.index,
+    }));
+    onChange?.();
+  };
+
+  const endTransition = () => {
+    setState((prev) => ({
+      ...prev,
+      deferredIndex: null,
+    }));
+  };
+
   return {
-    currentIndex,
+    currentIndex: state.index,
+    deferredIndex: state.deferredIndex,
     maxIndex,
-    getFolderTitle: (index: number) => content[index]!.folderTitle,
-    currentContent: content[currentIndex]!,
-    canNext: currentIndex < maxIndex,
-    canPrev: currentIndex > 0,
-    prevTab: () => {
-      setCurrentIndex((prev) => Math.max(prev - 1, 0));
-      onChange?.();
-    },
-    nextTab: () => {
-      setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
-      onChange?.();
-    },
-    toTab: (index: number) => {
-      setCurrentIndex(Math.max(Math.min(index, maxIndex), 0));
-      onChange?.();
-    },
+    getContent: (index: number) => content[index]!,
+    canNext: state.index < maxIndex,
+    canPrev: state.index > 0,
+    prevTab: () => updateContent(state.index - 1),
+    nextTab: () => updateContent(state.index + 1),
+    toTab: updateContent,
+    endTransition,
   };
 }
 

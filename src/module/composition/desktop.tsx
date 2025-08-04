@@ -12,6 +12,9 @@ export function DesktopSection({
   style?: React.CSSProperties;
   tabModel: TabModel;
 }) {
+  const currentContent = tabModel.getContent(tabModel.currentIndex);
+  const deferredContent = tabModel.getContent(tabModel.deferredIndex ?? tabModel.currentIndex);
+
   return (
     <Layout
       className={className}
@@ -42,8 +45,8 @@ export function DesktopSection({
               }}
             />
             <Layout.TitleRange>
-              <Layout.LabelRange value={tabModel.currentContent.range.start} style={{ color: 'var(--primary)' }} />
-              <Layout.LabelRange value={tabModel.currentContent.range.end} style={{ color: 'var(--secondary)' }} />
+              <Layout.LabelRange value={currentContent.range.start} style={{ color: 'var(--primary)' }} />
+              <Layout.LabelRange value={currentContent.range.end} style={{ color: 'var(--secondary)' }} />
             </Layout.TitleRange>
             <PaginationCircle
               current={tabModel.currentIndex}
@@ -64,7 +67,7 @@ export function DesktopSection({
                       transform: 'translate(0, -50%)',
                     }}
                   >
-                    {tabModel.getFolderTitle(index)}
+                    {tabModel.getContent(index).folderTitle}
                   </Layout.TitleFolder>
                 </PaginationCircle.Item>
               )}
@@ -81,11 +84,13 @@ export function DesktopSection({
         </>
       }
       folder={
-        <Slider key={tabModel.currentIndex} style={{ marginTop: 20 }}>
-          {tabModel.currentContent.folder.map(({ title, description }, index) => (
-            <Slider.Item key={index} year={title} description={description} />
-          ))}
-        </Slider>
+        <Layout.FolderWrapper animateType={tabModel.deferredIndex === null ? 'enter' : 'exit'}>
+          <Slider key={tabModel.deferredIndex ?? tabModel.currentIndex} style={{ marginTop: 20 }}>
+            {deferredContent.folder.map(({ title, description }, index) => (
+              <Slider.Item key={index} year={title} description={description} />
+            ))}
+          </Slider>
+        </Layout.FolderWrapper>
       }
     />
   );

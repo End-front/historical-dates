@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import { useMediaQuery } from '../shared/lib/react';
 import { MEDIA_VALUES } from '../shared/model/media-query';
 
@@ -9,14 +11,20 @@ import { AnimateTimelineProvider, useTimelineModel } from './view-model/use-anim
 export function TimelineRangeSection() {
   const isDesktop = useMediaQuery(`(min-width: ${MEDIA_VALUES.lg}px)`);
 
-  const timelineModel = useTimelineModel();
-  const tabModel = useTab(STATIC_CONTENT, {
-    onChange: () => {
-      timelineModel?.invalidate();
+  const onChangeRef = useRef<() => void | null>(null);
 
-      timelineModel?.restart(true);
-    },
+  const tabModel = useTab(STATIC_CONTENT, {
+    onChange: () => onChangeRef.current?.(),
   });
+
+  const timelineModel = useTimelineModel({
+    onMiddle: () => tabModel.endTransition(),
+  });
+
+  onChangeRef.current = () => {
+    timelineModel?.invalidate();
+    timelineModel?.restart(true);
+  };
 
   if (isDesktop) {
     return (
