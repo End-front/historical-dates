@@ -50,9 +50,9 @@ export function MobileSection({
             left={
               <Controls
                 disabledPrev={!tabModel.canPrev}
-                onPrev={tabModel.prevTab}
+                onPrev={() => tabModel.toTab(tabModel.currentIndex - 1)}
                 disabledNext={!tabModel.canNext}
-                onNext={tabModel.nextTab}
+                onNext={() => tabModel.toTab(tabModel.currentIndex + 1)}
               />
             }
             center={

@@ -77,9 +77,9 @@ export function DesktopSection({
           <Indicator current={tabModel.currentIndex + 1} max={tabModel.maxIndex + 1} style={{ marginBottom: 20 }} />
           <Controls
             disabledPrev={!tabModel.canPrev}
-            onPrev={tabModel.prevTab}
+            onPrev={() => tabModel.toTab(tabModel.currentIndex - 1)}
             disabledNext={!tabModel.canNext}
-            onNext={tabModel.nextTab}
+            onNext={() => tabModel.toTab(tabModel.currentIndex + 1)}
           />
         </>
       }

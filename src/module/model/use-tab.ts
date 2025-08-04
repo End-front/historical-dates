@@ -12,14 +12,7 @@ export type TimelineContent = {
   }>;
 };
 
-export function useTab(
-  content: TimelineContent[],
-  {
-    onChange,
-  }: {
-    onChange?: () => void;
-  } = {},
-) {
+export function useTab(content: TimelineContent[]) {
   const [state, setState] = useState<{
     index: number;
     deferredIndex: number | null;
@@ -29,12 +22,11 @@ export function useTab(
   });
   const maxIndex = content.length - 1;
 
-  const updateContent = async (newValue: number) => {
+  const toTab = (newValue: number) => {
     setState((prev) => ({
       index: Math.max(0, Math.min(newValue, maxIndex)),
       deferredIndex: prev.deferredIndex ?? prev.index,
     }));
-    onChange?.();
   };
 
   const endTransition = () => {
@@ -51,9 +43,7 @@ export function useTab(
     getContent: (index: number) => content[index]!,
     canNext: state.index < maxIndex,
     canPrev: state.index > 0,
-    prevTab: () => updateContent(state.index - 1),
-    nextTab: () => updateContent(state.index + 1),
-    toTab: updateContent,
+    toTab,
     endTransition,
   };
 }
