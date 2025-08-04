@@ -84,7 +84,7 @@ export function DesktopSection({
         </>
       }
       folder={
-        <Layout.FolderWrapper animateType={tabModel.deferredIndex === null ? 'enter' : 'exit'}>
+        <Layout.FolderWrapper isDeferred={tabModel.deferredIndex !== null}>
           <Slider key={tabModel.deferredIndex ?? tabModel.currentIndex} style={{ marginTop: 20 }}>
             {deferredContent.folder.map(({ title, description }, index) => (
               <Slider.Item key={index} year={title} description={description} />

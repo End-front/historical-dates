@@ -33,7 +33,7 @@ export function MobileSection({
         </Layout.TitleRange>
       }
       folder={
-        <Layout.FolderWrapper animateType={tabModel.deferredIndex === null ? 'enter' : 'exit'}>
+        <Layout.FolderWrapper isDeferred={tabModel.deferredIndex !== null}>
           <Layout.TitleFolder>{deferredContent.folderTitle}</Layout.TitleFolder>
           <Layout.Divider />
           <Slider key={tabModel.deferredIndex ?? tabModel.currentIndex} style={{ marginBottom: 30 }}>

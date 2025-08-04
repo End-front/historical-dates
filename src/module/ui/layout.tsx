@@ -37,12 +37,12 @@ export function Layout({
 }
 
 Layout.FolderWrapper = function FolderWrapper({
-  animateType,
+  isDeferred,
   className,
   style,
   children,
 }: {
-  animateType?: 'exit' | 'enter';
+  isDeferred?: boolean;
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
@@ -57,7 +57,7 @@ Layout.FolderWrapper = function FolderWrapper({
   return (
     <div
       className={cn(styles.folderWrapper, className)}
-      style={{ ...style, opacity, pointerEvents: animateType === 'enter' ? 'auto' : 'none' }}
+      style={{ ...style, opacity, pointerEvents: isDeferred ? 'none' : 'auto' }}
     >
       {children}
     </div>
