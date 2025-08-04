@@ -1,7 +1,7 @@
-import { useRef } from 'react';
-
 import { cn } from '../../shared/lib/cn';
 import { useAnimatePositionByRadian } from '../view-model/use-animate-position-by-radian';
+import { useAnimateTimeline } from '../view-model/use-animate-timeline';
+import { useFadeText } from '../view-model/use-fade-text';
 
 import { ArrowDownIcon } from './icons';
 import styles from './timeline.module.scss';
@@ -139,34 +139,38 @@ export function PaginationCircle({
 PaginationCircle.Item = function PaginationCircleItem({
   order,
   radian,
-  className,
-  style,
   isActive,
   onSelect,
+  className,
+  style,
   children,
 }: {
   order: number;
   radian: number;
-  className?: string;
-  style?: React.CSSProperties;
   isActive?: boolean;
   onSelect?: () => void;
+  className?: string;
+  style?: React.CSSProperties;
   children?: React.ReactNode;
 }) {
-  const elementRef = useRef<HTMLDivElement>(null);
+  const { addToStart, addToMiddle } = useAnimateTimeline();
 
-  useAnimatePositionByRadian(elementRef, radian);
+  const position = useAnimatePositionByRadian({ radian, addAnimation: addToStart });
+  const opacity = useFadeText({
+    visible: !!isActive,
+    addExitAnimation: addToStart,
+    addEnterAnimation: addToMiddle,
+  });
 
   return (
     <div
-      ref={elementRef}
       className={cn(styles.paginationCircleItem, isActive && styles.paginationCircleItemActive, className)}
-      style={style}
+      style={{ ...style, '--x': position.x, '--y': position.y } as React.CSSProperties}
     >
       <button className={styles.paginationCircleItemContent} onClick={onSelect}>
         {order}
       </button>
-      {children}
+      <div style={{ opacity }}>{children}</div>
     </div>
   );
 };

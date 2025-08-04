@@ -1,17 +1,37 @@
-import { useMediaQuery } from '../shared/lib/react/use-media-query';
+import { useMediaQuery } from '../shared/lib/react';
 import { MEDIA_VALUES } from '../shared/model/media-query';
 
 import { DesktopSection } from './composition/desktop';
 import { MobileSection } from './composition/mobile';
 import { type TimelineContent, useTab } from './model/use-tab';
+import { AnimateTimelineProvider, useTimelineModel } from './view-model/use-animate-timeline';
 
 export function TimelineRangeSection() {
   const isDesktop = useMediaQuery(`(min-width: ${MEDIA_VALUES.lg}px)`);
-  const tabModel = useTab(STATIC_CONTENT);
+
+  const timelineModel = useTimelineModel();
+  const tabModel = useTab(STATIC_CONTENT, {
+    onChange: () => timelineModel.reset(),
+  });
 
   if (isDesktop) {
     return (
-      <DesktopSection
+      <AnimateTimelineProvider timeline={timelineModel.timeline}>
+        <DesktopSection
+          tabModel={tabModel}
+          style={{
+            flexGrow: 1,
+            paddingTop: 20,
+            paddingBottom: 20,
+          }}
+        />
+      </AnimateTimelineProvider>
+    );
+  }
+
+  return (
+    <AnimateTimelineProvider timeline={timelineModel.timeline}>
+      <MobileSection
         tabModel={tabModel}
         style={{
           flexGrow: 1,
@@ -19,18 +39,7 @@ export function TimelineRangeSection() {
           paddingBottom: 20,
         }}
       />
-    );
-  }
-
-  return (
-    <MobileSection
-      tabModel={tabModel}
-      style={{
-        flexGrow: 1,
-        paddingTop: 20,
-        paddingBottom: 20,
-      }}
-    />
+    </AnimateTimelineProvider>
   );
 }
 

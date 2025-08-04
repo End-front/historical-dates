@@ -41,7 +41,6 @@ export function DesktopSection({
                 right: 'calc(var(--container-padding) * -1 + 1px',
               }}
             />
-
             <Layout.TitleRange>
               <Layout.LabelRange value={tabModel.currentContent.range.start} style={{ color: 'var(--primary)' }} />
               <Layout.LabelRange value={tabModel.currentContent.range.end} style={{ color: 'var(--secondary)' }} />
@@ -63,7 +62,6 @@ export function DesktopSection({
                       left: 'calc(100% + 20px)',
                       top: '50%',
                       transform: 'translate(0, -50%)',
-                      display: !isActive ? 'none' : undefined,
                     }}
                   >
                     {tabModel.getFolderTitle(index)}

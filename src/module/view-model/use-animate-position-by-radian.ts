@@ -1,33 +1,32 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-export function useAnimatePositionByRadian(elementRef: React.RefObject<HTMLElement | null>, radian: number) {
+export function useAnimatePositionByRadian({
+  addAnimation,
+  radian,
+}: {
+  addAnimation: (animation: gsap.core.Tween) => void;
+  radian: number;
+}) {
+  const [position, setPosition] = useState(() => getPosition(radian));
+
   const animatingRadian = useRef(radian);
-
   useGSAP(() => {
-    const { x, y } = getPosition(radian);
+    addAnimation(
+      gsap.to(animatingRadian, {
+        current: radian,
+        immediateRender: true,
+        duration: 0.8,
+        ease: 'power1.out',
+        onUpdate: function () {
+          setPosition(getPosition(animatingRadian.current));
+        },
+      }),
+    );
+  }, [addAnimation, radian]);
 
-    gsap.set(elementRef.current, {
-      '--x': x,
-      '--y': y,
-    });
-  });
-  useGSAP(() => {
-    gsap.to(animatingRadian, {
-      current: radian,
-      duration: 0.8,
-      ease: 'power1.out',
-      onUpdate: function () {
-        const { x, y } = getPosition(animatingRadian.current);
-
-        gsap.set(elementRef.current, {
-          '--x': x,
-          '--y': y,
-        });
-      },
-    });
-  }, [radian]);
+  return position;
 }
 
 const getPosition = (radian: number) => {
