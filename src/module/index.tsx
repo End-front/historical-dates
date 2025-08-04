@@ -1,1 +1,1 @@
-export { TimelineRangeSection } from './section';
+export { TimelineSliderSection } from './section';

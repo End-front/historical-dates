@@ -6,7 +6,7 @@ import { MobileSection } from './composition/mobile';
 import { type TimelineContent, useTab } from './model/use-tab';
 import { AnimateTimelineProvider, useTimelineModel } from './view-model/use-animate-timeline';
 
-export function TimelineRangeSection() {
+export function TimelineSliderSection() {
   const isDesktop = useMediaQuery(`(min-width: ${MEDIA_VALUES.lg}px)`);
 
   const tabModel = useTab(STATIC_CONTENT);
